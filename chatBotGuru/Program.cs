@@ -15,7 +15,7 @@ namespace OpenAIDemo
             string generatedText = await GenerateTextAsync(prompt);
             if (generatedText != null)
             {
-                Console.WriteLine("Generated text: " + generatedText);
+                Console.WriteLine("AITextGenerator: " + generatedText);
             }
             Console.ReadLine();
         }
@@ -26,7 +26,7 @@ namespace OpenAIDemo
             var request = new HttpRequestMessage
             {
                 Method = HttpMethod.Post,
-                RequestUri = new Uri("https://api.openai.com/v1/engines/davinci-codex/completions"),
+                RequestUri = new Uri("https://api.openai.com/v1/completions"),
                 Headers =
                 {
                     { "Authorization", "Bearer YOUR_API_KEY" },
@@ -36,9 +36,11 @@ namespace OpenAIDemo
                         new
                         {
                             prompt,
-                            max_tokens = 60,
+                            model = "text-davinci-003",
+                            temperature = 0,
+                            max_tokens = 100,
                             n = 1,
-                            stop = "\n"
+                            //stop = "\n"
                         }),
                     System.Text.Encoding.UTF8,
                     "application/json")
